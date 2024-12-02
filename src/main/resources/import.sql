@@ -1,0 +1,1 @@
+insert into MEMBER (name, login_id, password, user_role) values ('관리자', 'admin', '$2a$10$XYzd93UuAwT8R3OkMmicu.ZEue30QvJq3s3zQEG./DFlYpgIsD78G', 'ADMIN');
