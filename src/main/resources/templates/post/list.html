@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:replace="~{header :: headerLayout}"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>게시글 보기</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">게시글 검색</h1>
+    <form th:action="@{/posts/search}" method="get">
+        <!-- 검색 옵션 -->
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="searchOption" id="searchTitle" value="title" onclick="toggleSearchOption()" checked>
+                <label class="form-check-label" for="searchTitle">제목 검색</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="searchOption" id="searchWriterId" value="writerId" onclick="toggleSearchOption()">
+                <label class="form-check-label" for="searchWriterId">작성자 ID 검색</label>
+            </div>
+        </div>
+
+        <!-- 제목 입력 -->
+        <div class="form-group" id="titleInput">
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력하세요">
+        </div>
+
+        <!-- 작성자 ID 입력 -->
+        <div class="form-group" id="writerIdInput" style="display: none;">
+            <label for="writerId">작성자 ID</label>
+            <input type="text" id="writerId" name="writerId" class="form-control" placeholder="작성자 ID를 입력하세요">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">검색</button>
+    </form>
+</div>
+</body>
+<script>
+    function toggleSearchOption() {
+        const searchOption = document.querySelector('input[name="searchOption"]:checked').value;
+        document.getElementById('titleInput').style.display = searchOption === 'title' ? 'block' : 'none';
+        document.getElementById('writerIdInput').style.display = searchOption === 'writerId' ? 'block' : 'none';
+    }
+</script>
+</html>
