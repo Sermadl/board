@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerLayout">
+    <header>
+        <th:block th:if="${session.member != null}">
+            <button id="logout" class="btn btn-primary"
+                    th:onclick="|location.href='@{/member/sign-in}'|">
+                <span th:text="|${session.member.name}님 로그아웃|"></span></button>
+        </th:block>
+        <th:block th:if="${session.member == null}"
+                  th:onclick="|location.href='@{/member/sign-out}'|">
+            <button id="login" class="btn btn-primary">로그인</button>
+        </th:block>
+    </header>
+</th:block>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <link href="../css/bootstrap.min.css"
+              th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <title>Home</title>
+    </head>
+    <body>
+        <div class="container" style="max-width: 600px">
+            <div class="py-5 text-center">
+                <h2>홈 화면</h2>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-secondary btn-lg"
+                            th:if="${session.member == null}"
+                            th:onclick="|location.href='@{/member/sign-up}'|" type="button">
+                        회원가입
+                    </button>
+                    <button class="w-100 btn btn-primary btn-lg"
+                            th:if="${session.member != null}"
+                            th:onclick="|location.href='@{/post/list}'|" type="button">
+                        게시글 보기
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="w-100 btn btn-dark btn-lg"
+                              th:if="${session.member == null}"
+                              th:onclick="|location.href='@{/member/sign-in}'|" type="button">
+                        로그인
+                    </button>
+                    <button class="w-100 btn btn-dark btn-lg"
+                            th:if="${session.member != null}"
+                            th:onclick="|location.href='@{/member/sign-out}'|" type="button">
+                        <span th:text="|${session.member.name}님 로그아웃|"></span>
+                    </button>
+                </div>
+            </div>
+            <hr class="my-4">
+        </div>
+    </body>
+    <script>
+        let message = "[[${msg}]]";
+        if(message !== ""){
+            alert(message);
+        }
+    </script>
+</html>
