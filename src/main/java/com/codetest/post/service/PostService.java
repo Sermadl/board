@@ -3,14 +3,18 @@ package com.codetest.post.service;
 import com.codetest.member.model.entity.Member;
 import com.codetest.member.repository.MemberRepository;
 import com.codetest.post.model.dto.request.PostCreateRequest;
+import com.codetest.post.model.dto.response.PostPreviewResponse;
 import com.codetest.post.model.entity.Post;
 import com.codetest.post.model.entity.PostFile;
 import com.codetest.post.repository.PostFileRepository;
 import com.codetest.post.repository.PostRepository;
+import com.codetest.post.repository.PostRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -33,6 +37,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final PostFileRepository postFileRepository;
+    private final PostRepositoryCustom postRepositoryCustom;
     private final Tika tika = new Tika();
 
     @Value("${filePath}")
@@ -118,5 +123,20 @@ public class PostService {
         if(request.getContent().isEmpty()){
             result.addError(new FieldError("request", "content", "내용을 입력해주세요"));
         }
+    }
+
+    public Page<PostPreviewResponse> showPost(Pageable pageable, String title, String writerId) {
+        return getPostPreview(postRepositoryCustom.findByWhere(pageable, title, writerId));
+    }
+
+    public Page<PostPreviewResponse> getPostPreview(Page<Post> request) {
+        return request.map(currPost -> new PostPreviewResponse(
+                currPost.getId(),
+                currPost.getTitle(),
+                currPost.getMember().getLoginId(),
+                currPost.getViews(),
+                postFileRepository.findByPostId(currPost.getId()).isPresent() ? "있음" : "없음",
+                currPost.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        ));
     }
 }

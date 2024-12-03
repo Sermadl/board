@@ -1,18 +1,18 @@
 package com.codetest.post.controller;
 
 import com.codetest.post.model.dto.request.PostCreateRequest;
+import com.codetest.post.model.dto.response.PostPreviewResponse;
 import com.codetest.post.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static com.codetest.global.auth.AppAuthentication.getMemberId;
 
@@ -48,11 +48,23 @@ public class PostController {
 
         postService.savePost(request, getMemberId(httpServletRequest));
 
-        return "post/create-post";
+        return "post/list";
     }
 
     @GetMapping("/list")
-    public String showPostList(Model model) {
+    public String showPostList(@RequestParam(required = false) String title,
+                               @RequestParam(required = false) String writerId,
+                               Pageable pageable,
+                               Model model) {
+
+        if(writerId != null && writerId.isEmpty()) writerId = null;
+
+        Page<PostPreviewResponse> posts = postService.showPost(pageable, title, writerId);
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("title", title);
+        model.addAttribute("writerId", writerId);
+
         return "post/list";
     }
 }

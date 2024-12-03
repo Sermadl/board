@@ -9,17 +9,19 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="my-4">게시글 검색</h1>
-    <form th:action="@{/posts/search}" method="get">
+    <div class="py-5 text-center">
+        <h2>게시글 검색</h2>
+    </div>
+    <form th:action="@{/post/list}" method="get" onsubmit="return handleSearchOption()">
         <!-- 검색 옵션 -->
         <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="searchOption" id="searchTitle" value="title" onclick="toggleSearchOption()" checked>
                 <label class="form-check-label" for="searchTitle">제목 검색</label>
+                <input class="form-check-input" type="radio" id="searchTitle" name="searchCriteria" value="title" onclick="toggleSearchOption()" checked>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="searchOption" id="searchWriterId" value="writerId" onclick="toggleSearchOption()">
                 <label class="form-check-label" for="searchWriterId">작성자 ID 검색</label>
+                <input class="form-check-input" type="radio" id="searchWriterId" name="searchCriteria" value="writerId" onclick="toggleSearchOption()">
             </div>
         </div>
 
@@ -37,13 +39,80 @@
 
         <button type="submit" class="btn btn-primary mt-3">검색</button>
     </form>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>파일</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post, iterStat : ${posts.content}">
+            <td>
+                <a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a>
+            </td>
+            <td th:text="${post.writerId}"></td>
+            <td th:text="${post.views}"></td>
+            <td th:text="${post.file}"></td>
+            <td th:text="${post.createdAt}"></td>
+        </tr>
+        <tr th:if="${posts.content.isEmpty()}">
+            <td colspan="4" class="text-center">게시글이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징 -->
+    <nav>
+        <ul class="pagination">
+            <li th:classappend="${posts.hasPrevious()} ? '' : 'disabled'">
+                <a th:href="@{/post/list(page=${posts.number - 1}, size=${posts.size}, title=${title}, writerId=${writerId})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, posts.totalPages - 1)}"
+                th:classappend="${posts.number == i} ? 'active' : ''">
+                <a th:href="@{/post/list(page=${i}, size=${posts.size}, title=${title}, writerId=${writerId})}" th:text="${i + 1}"></a>
+            </li>
+            <li th:classappend="${posts.hasNext()} ? '' : 'disabled'">
+                <a th:href="@{/post/list(page=${posts.number + 1}, size=${posts.size}, title=${title}, writerId=${writerId})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 <script>
     function toggleSearchOption() {
-        const searchOption = document.querySelector('input[name="searchOption"]:checked').value;
-        document.getElementById('titleInput').style.display = searchOption === 'title' ? 'block' : 'none';
-        document.getElementById('writerIdInput').style.display = searchOption === 'writerId' ? 'block' : 'none';
+        const titleInput = document.getElementById('titleInput');
+        const writerIdInput = document.getElementById('writerIdInput');
+        const searchTitleChecked = document.getElementById('searchTitle').checked;
+
+        // 제목 검색과 작성자 ID 검색 입력 필드 표시 전환
+        titleInput.style.display = searchTitleChecked ? 'block' : 'none';
+        writerIdInput.style.display = searchTitleChecked ? 'none' : 'block';
+    }
+
+    function handleSearchOption() {
+        const titleInput = document.getElementById('title');
+        const writerIdInput = document.getElementById('writerId');
+
+        // 제목 검색만 활성화된 경우
+        if (document.getElementById('searchTitle').checked) {
+            writerIdInput.name = ""; // name 속성 제거
+        }
+
+        // 작성자 ID 검색만 활성화된 경우
+        if (document.getElementById('searchWriterId').checked) {
+            titleInput.name = ""; // name 속성 제거
+        }
+
+        return true; // 폼 제출 허용
     }
 </script>
 </html>
