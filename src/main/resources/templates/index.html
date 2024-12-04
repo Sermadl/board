@@ -1,1 +1,83 @@
-으악
+<p><strong>이름</strong>: 김세은</p>
+<p><strong>이메일</strong>: <a href="mailto:rlatpdms1014@gmail.com">rlatpdms1014@gmail.com</a></p>
+<p><strong>전화번호</strong>: 01099368036</p>
+<p>&nbsp;</p>
+<h3><strong>&lt; 사용 기술 &gt;</strong></h3>
+<h4><strong>Backend Framework</strong></h4>
+<ul>
+    <li>Spring Boot (Web, Security, JPA)</li>
+</ul>
+<h4><strong>Frontend Template Engine</strong></h4>
+<ul>
+    <li>Thymeleaf (with Spring Security Extras)</li>
+</ul>
+<h4><strong>Database</strong></h4>
+<ul>
+    <li>H2 (In-memory DB for development/testing)</li>
+</ul>
+<h4><strong>Build System</strong></h4>
+<ul>
+    <li>Gradle</li>
+</ul>
+<h4><strong>Code Generation</strong></h4>
+<ul>
+    <li>Lombok</li>
+</ul>
+<h4><strong>Dynamic Query Support</strong></h4>
+<ul>
+    <li>QueryDSL</li>
+</ul>
+<h4><strong>File Handling</strong></h4>
+<ul>
+    <li>Apache Commons FileUpload</li>
+    <li>Apache Commons IO</li>
+    <li>Apache Tika</li>
+</ul>
+<p>&nbsp;</p>
+<h3><strong>&lt; 구현 범위 &gt;</strong></h3>
+<ul>
+    <li>
+        <h4><strong>회원가입 및 로그인/로그아웃</strong></h4>
+        <ul>
+            <li>입력 필드 예외 처리</li>
+            <li>사용자 권한 분리(USER, ADMIN): 관리자 계정으로 게시글 삭제 가능
+                <ul>
+                    <li>ADMIN Id: admin</li>
+                    <li>ADMIN Pw: 1014</li>
+                </ul>
+            </li>
+            <li>로그인이 필요한 경로 진입 시 로그인 화면으로 리다이렉트
+                <ul>
+                    <li>로그인이 필요한 경로: /post/**</li>
+                    <li>필요하지 않은 경로: 그 외 및 /post/list</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <h4><strong>게시글 작성, 수정, 삭제 및 조</strong>회</h4>
+        <ul>
+            <li>게시글 구성요소: 제목, 내용, 작성자 Id, 작성일, 조회수, 파일</li>
+            <li>작성자만 게시글 수정이 가능</li>
+            <li>관리자 계정으로 모든 게시글 삭제 가능</li>
+            <li>제목이나 작성자 Id로 게시글 검색 가능</li>
+            <li>한 페이지 당 게시글 10개 단위로 페이징</li>
+        </ul>
+    </li>
+</ul>
+<ul>
+    <li>
+        <h4><strong>파일 업로드, 수정, 삭제 및 다운로드</strong></h4>
+        <ul>
+            <li>업로드 가능한 파일 제한
+                <ul>
+                    <li>Jpeg, Jpg, Png, Mp4, Mp3, Pdf, ppt, doc, xsl, txt 등 업로드 가능</li>
+                </ul>
+            </li>
+            <li>실제로 저장되는 이름과 보여지는 이름, 다운로드 되는 이름을 다르게 함</li>
+            <li>파일 수정 시 기존 업로드 되어 있던 파일 삭제 됨 (실제 파일 저장 경로에서 삭제되는 것은 아님)</li>
+        </ul>
+    </li>
+</ul>
+
+<p><a href="/">홈 화면으로 이동하기</a></p>

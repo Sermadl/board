@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headerLayout">
+    <div class="text-end">
     <header>
         <th:block th:if="${session.member != null}">
-            <button id="logout" class="btn btn-primary"
-                    th:onclick="|location.href='@{/member/sign-in}'|">
+            <th:block th:switch="${currentPage}">
+                <th:block th:case="'/post/list'">
+                    <button id="post" class="btn btn-primary"
+                            th:onclick="|location.href='@{/post}'|">글 작성하기</button>
+                </th:block>
+                <th:block th:case="'/post'">
+                    <button id="postList" class="btn btn-primary"
+                            th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+                </th:block>
+                <th:block th:case="'/post/{postId}'">
+                    <button id="postView" class="btn btn-primary"
+                            th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+                </th:block>
+            </th:block>
+        </th:block>
+        <th:block th:if="${session.member != null}">
+            <button id="logout" class="btn btn-secondary"
+                    th:onclick="|location.href='@{/member/sign-out}'|">
                 <span th:text="|${session.member.name}님 로그아웃|"></span></button>
         </th:block>
-        <th:block th:if="${session.member == null}"
-                  th:onclick="|location.href='@{/member/sign-out}'|">
-            <button id="login" class="btn btn-primary">로그인</button>
+        <th:block th:if="${session.member == null}">
+            <button id="login" class="btn btn-primary"
+                    th:onclick="|location.href='@{/member/sign-in}'|">로그인</button>
         </th:block>
     </header>
+    </div>
 </th:block>
 </html>

@@ -13,8 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static com.codetest.global.auth.AppAuthentication.getMemberId;
-
 @Slf4j
 @Controller
 @RequestMapping("/member")

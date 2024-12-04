@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PostCreateRequest {
+public class PostEditRequest {
     private String title;
     private String content;
     private List<MultipartFile> files;
