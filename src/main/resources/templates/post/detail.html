@@ -62,6 +62,12 @@
                     type="button">삭제</button>
         </div>
     </div>
+    <!-- 관리자만 삭제 버튼 표시 -->
+    <button th:if="${session.role == 'ADMIN'}"
+            class="w-100 btn btn-secondary btn-lg"
+            th:onclick="|location.href='@{/post/delete/{id}(id=${post.id})}'|">
+        삭제
+    </button>
 </div> <!-- /container -->
 </body>
 </html>
