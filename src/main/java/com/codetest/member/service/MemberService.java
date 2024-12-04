@@ -55,6 +55,7 @@ public class MemberService {
         HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
 
         session.setAttribute("member", member);
+        session.setAttribute("role", member.getUserRole().toString());
         session.setMaxInactiveInterval(1800);
     }
 

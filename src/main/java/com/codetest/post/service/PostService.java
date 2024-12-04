@@ -1,6 +1,7 @@
 package com.codetest.post.service;
 
 import com.codetest.member.model.entity.Member;
+import com.codetest.member.model.entity.MemberRole;
 import com.codetest.member.repository.MemberRepository;
 import com.codetest.post.model.dto.request.PostCreateRequest;
 import com.codetest.post.model.dto.request.PostEditRequest;
@@ -94,7 +95,12 @@ public class PostService {
     public void deletePost(Long postId, Long memberId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        if(!post.getMember().getId().equals(memberId)) throw new RuntimeException("권한이 없습니다.");
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        if(!post.getMember().getId().equals(memberId)
+                && !member.getUserRole().equals(MemberRole.ADMIN))
+            throw new RuntimeException("권한이 없습니다.");
 
         postRepository.deleteById(postId);
         postFileRepository.deleteByPostId(postId);
