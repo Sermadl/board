@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <link href="../css/bootstrap.min.css"
           th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <title>게시글 보기</title>
+    <title>게시글 목록</title>
 </head>
 <body>
-<div class="container">
+<div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2>게시글 검색</h2>
+        <h2>게시글 목록</h2>
     </div>
     <form th:action="@{/post/list}" method="get" onsubmit="return handleSearchOption()">
         <!-- 검색 옵션 -->
