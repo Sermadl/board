@@ -22,14 +22,20 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
 
         if(session == null) {
-            throw new RuntimeException("로그인 되어 있지 않습니다.");
+            response.sendRedirect("/member/sign-in");
+            return false;
+        } else {
+            Member member = (Member) session.getAttribute("member");
+
+            if (member == null) {
+                response.sendRedirect("/member/sign-in");
+                return false;
+            }
+
+            memberRepository.findById(member.getId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            return HandlerInterceptor.super.preHandle(request, response, handler);
         }
-
-        Member member = (Member) session.getAttribute("member");
-
-        memberRepository.findById(member.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }
