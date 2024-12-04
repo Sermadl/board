@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:replace="~{header :: headerLayout}"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>게시글 보기</title>
+    <style>
+        p{
+            font-weight: bold;
+            color: #b02a37;
+        }
+        .fieldError{
+            border-color: #b02a37;
+        }
+        .file-input-container {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>게시글 보기</h2>
+    </div>
+    <form th:action="@{/post/edit/{id}(id=${post.id})}" th:object="${post}" method="post" enctype="multipart/form-data">
+        <div>
+            <label for="title" class="sr-only">제목</label>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            <input type="text" id="title" class="form-control" th:field="*{title}" placeholder="제목을 입력하세요.">
+        </div>
+        <div>
+            <label for="content" class="sr-only">내용</label>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+            <textarea cols="150" rows="10" id="content" class="form-control" th:field="*{content}" placeholder="내용을 입력하세요."></textarea>
+        </div>
+        <div th:if="${!post.files.isEmpty()}">
+            <label for="fileId">파일</label>
+            <ul>
+                <li th:each="file : ${post.files}">
+                    <input type="text" id="fileId" class="form-control"
+                           th:value="${file.fileName}" readonly>
+                    <button type="button" class="btn btn-secondary mt-3"
+                            th:onclick="|location.href='@{/post/file/delete/{id}(id=${file.id})}'|">삭제</button>
+                </li>
+            </ul>
+        </div>
+        <div id="file-inputs"></div>
+        <div>
+            <button type="button" class="btn btn-secondary mt-3" onclick="addFileInput()">파일 추가</button>
+            <p>기존에 업로드 되었던 파일은 삭제됩니다.</p>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">저장</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='items.html'"
+                        th:onclick="|location.href='@{/post/delete/{id}(id=${post.id})}'|"
+                        type="button">삭제</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        th:onclick="|location.href='@{/post/{id}(id=${post.id})}'|"
+                        type="button">취소</button>
+            </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+<script>
+    // 파일 입력 필드 동적 추가
+    function addFileInput() {
+        const container = document.getElementById('file-inputs');
+        const inputCount = container.getElementsByTagName('input').length;
+
+        // 새로운 파일 입력 필드 생성
+        const newFileInput = document.createElement('div');
+        newFileInput.className = 'file-input-container';
+        newFileInput.innerHTML = `
+            <input type="file" name="files" id="file${inputCount + 1}" class="form-control">
+            <button type="button" class="btn btn-danger mt-2" onclick="removeFileInput(this)">삭제</button>
+        `;
+        container.appendChild(newFileInput);
+    }
+
+    // 파일 입력 필드 제거
+    function removeFileInput(button) {
+        const container = document.getElementById('file-inputs');
+        container.removeChild(button.parentElement); // 버튼의 부모 요소 삭제
+    }
+</script>
+</body>
+</html>

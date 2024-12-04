@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:replace="~{header :: headerLayout}"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <title>게시글 보기</title>
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>게시글 보기</h2>
+    </div>
+    <div>
+        <label for="title">제목</label>
+        <input type="text" id="title" class="form-control"
+               th:value="${post.title}" readonly>
+    </div>
+    <div>
+        <label for="writerId">작성자 Id</label>
+        <input type="text" id="writerId" class="form-control"
+               th:value="${post.writerId}" readonly>
+    </div>
+    <div>
+        <label for="views">조회수</label>
+        <input type="text" id="views" class="form-control"
+               th:value="${post.views}" readonly>
+    </div>
+    <div>
+        <label for="createdAt">작성일</label>
+        <input type="text" id="createdAt" class="form-control"
+               th:value="${post.createdAt}" readonly>
+    </div>
+    <div>
+        <label for="content">내용</label>
+        <input type="text" id="content" class="form-control"
+               th:value="${post.content}" readonly>
+    </div>
+    <div th:if="${!post.files.isEmpty()}">
+        <label for="fileId">파일</label>
+        <ul>
+            <li th:each="file : ${post.files}">
+                <a type="text" id="fileId" class="icon-link"
+                   th:href="@{/post/file-download/{id}(id=${file.id})}">
+                    [[${file.fileName}]]</a>
+            </li>
+        </ul>
+    </div>
+    <hr class="my-4">
+    <div th:if="${post.isEditable()}" class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='editForm.html'"
+                    th:onclick="|location.href='@{/post/edit/{id}(id=${post.id})}'|"
+                    type="button">글 수정</button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='items.html'"
+                    th:onclick="|location.href='@{/post/delete/{id}(id=${post.id})}'|"
+                    type="button">삭제</button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

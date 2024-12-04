@@ -25,4 +25,13 @@ public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+
+    public void increaseViews() {
+        this.views++;
+    }
+
+    public void edit(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
