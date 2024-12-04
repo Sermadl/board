@@ -1,38 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기술 스택</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
 <p><strong>이름</strong>: 김세은</p>
 <p><strong>이메일</strong>: <a href="mailto:rlatpdms1014@gmail.com">rlatpdms1014@gmail.com</a></p>
 <p><strong>전화번호</strong>: 01099368036</p>
 <p>&nbsp;</p>
 <h3><strong>&lt; 사용 기술 &gt;</strong></h3>
-<h4><strong>Backend Framework</strong></h4>
-<ul>
-    <li>Spring Boot (Web, Security, JPA)</li>
-</ul>
-<h4><strong>Frontend Template Engine</strong></h4>
-<ul>
-    <li>Thymeleaf (with Spring Security Extras)</li>
-</ul>
-<h4><strong>Database</strong></h4>
-<ul>
-    <li>H2 (In-memory DB for development/testing)</li>
-</ul>
-<h4><strong>Build System</strong></h4>
-<ul>
-    <li>Gradle</li>
-</ul>
-<h4><strong>Code Generation</strong></h4>
-<ul>
-    <li>Lombok</li>
-</ul>
-<h4><strong>Dynamic Query Support</strong></h4>
-<ul>
-    <li>QueryDSL</li>
-</ul>
-<h4><strong>File Handling</strong></h4>
-<ul>
-    <li>Apache Commons FileUpload</li>
-    <li>Apache Commons IO</li>
-    <li>Apache Tika</li>
-</ul>
+<table>
+    <thead>
+    <tr>
+        <th>기술 분류</th>
+        <th>사용 기술</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Backend</td>
+        <td>Spring Boot (Web, JPA, Security)</td>
+    </tr>
+    <tr>
+        <td>Frontend</td>
+        <td>Thymeleaf</td>
+    </tr>
+    <tr>
+        <td>Database</td>
+        <td>H2 Database, Spring Data JPA</td>
+    </tr>
+    <tr>
+        <td>File Handling</td>
+        <td>Apache Commons FileUpload, Commons IO, Apache Tika</td>
+    </tr>
+    <tr>
+        <td>Dynamic Queries</td>
+        <td>QueryDSL</td>
+    </tr>
+    <tr>
+        <td>Build Tool</td>
+        <td>Gradle</td>
+    </tr>
+    </tbody>
+</table>
 <p>&nbsp;</p>
 <h3><strong>&lt; 구현 범위 &gt;</strong></h3>
 <ul>
@@ -81,3 +108,4 @@
 </ul>
 
 <p><a href="/">홈 화면으로 이동하기</a></p>
+</body>
