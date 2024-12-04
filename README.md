@@ -12,7 +12,8 @@
 
 ### **< ERD >**
 
-![image.png](%E1%84%80%E1%85%B5%E1%84%92%E1%85%AC%E1%86%A8%20%E1%84%86%E1%85%B5%E1%86%BE%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8%2015014cf1132680df88feccd058175c2e/image.png)
+![image](https://github.com/user-attachments/assets/13721217-eaad-42f5-a97c-92d0ff945fa1)
+
 
 ### **< 사용 기술 >**
 
